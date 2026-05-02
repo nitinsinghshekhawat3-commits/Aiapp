@@ -87,6 +87,14 @@ async function startServer() {
     }
   });
 
+  // Serve static files from dist (for production)
+  app.use(express.static(path.join(process.cwd(), 'dist')));
+
+  // Catch all handler: send back index.html for SPA routing
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(process.cwd(), 'dist', 'index.html'));
+  });
+
   // ✅ START SERVER
   app.listen(PORT, () => {
     console.log(`🔥 Server running on http://localhost:${PORT}`);

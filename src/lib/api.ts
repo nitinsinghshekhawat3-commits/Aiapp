@@ -11,11 +11,11 @@ export class ApiError extends Error {
 }
 
 export const api = {
- getMarketOverview: () => axios.get("http://localhost:3000/api/market-overview").then((res) => res.data),
+ getMarketOverview: () => axios.get("/api/market-overview").then((res) => res.data),
   
   getStockData: async (ticker: string) => {
     try {
-      const res = await axios.get(`http://localhost:3000/api/stock/${ticker}`);
+      const res = await axios.get(`/api/stock/${ticker}`);
       if (!res.data || !res.data.quote) {
         throw new ApiError("NOT_FOUND", `The ticker symbol '${ticker}' could not be located in our intelligence database.`);
       }
@@ -33,7 +33,7 @@ export const api = {
 
   analyzeStock: async (ticker: string) => {
     try {
-      const rawData = await axios.get(`http://localhost:3000/api/stock-raw/${ticker}`).then((res) => res.data);
+      const rawData = await axios.get(`/api/stock-raw/${ticker}`).then((res) => res.data);
       if (!rawData || !rawData.quote) {
         throw new ApiError("NOT_FOUND", `Analysis cannot be performed for '${ticker}' as no data was found.`);
       }
